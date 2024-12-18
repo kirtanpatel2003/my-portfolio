@@ -1,25 +1,36 @@
+// src/App.js
 import React from 'react';
-import { motion } from 'framer-motion';
-import './App.css'; // We can style things here
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { AnimatePresence } from 'framer-motion';
+
+import Navbar from './components/Navbar';
+import Home from './pages/Home';
+import Experience from './pages/Experience';
+import Accomplishments from './pages/Accomplishments';
+import Resume from './pages/Resume';
+import Contact from './pages/Contact';
+
+function AnimatedRoutes() {
+  const location = useLocation();
+  return (
+    <AnimatePresence mode="wait">
+      <Routes location={location} key={location.pathname}>
+        <Route path="/" element={<Home />} />
+        <Route path="/experience" element={<Experience />} />
+        <Route path="/accomplishments" element={<Accomplishments />} />
+        <Route path="/resume" element={<Resume />} />
+        <Route path="/contact" element={<Contact />} />
+      </Routes>
+    </AnimatePresence>
+  );
+}
 
 function App() {
   return (
-    <div className="App">
-      <motion.h1
-        initial={{ opacity: 0, y: -50 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1 }}
-      >
-        Welcome to My Animated React Site!
-      </motion.h1>
-      <motion.p
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 2 }}
-      >
-        Hosted on GitHub Pages, with React and Framer Motion.
-      </motion.p>
-    </div>
+    <Router>
+      <Navbar />
+      <AnimatedRoutes />
+    </Router>
   );
 }
 
